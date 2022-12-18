@@ -6,6 +6,9 @@
 metals.sbt
 # generated
 project/project
+# blackbox
+*.v
+*.f
 
 ### Project Specific stuff
 test_run_dir/*
@@ -136,7 +139,7 @@ local.properties
 *.app
 *.i*86
 *.x86_64
-*.hex
+# *.hex
 
 # Debug files
 *.dSYM/
