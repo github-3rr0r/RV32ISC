@@ -27,8 +27,15 @@ class Alu extends Module {
     // 用于得到操作数
     val oprand1 = WireDefault(0.U(DATA_WIDTH.W))
     val oprand2 = WireDefault(0.U(DATA_WIDTH.W))
-
-    oprand1 := Mux(io.bundleAluControl.ctrlJAL, io.pc, io.dataRead1)
+    //新增 corrected
+    when(io.bundleAluControl.ctrlJAL || io.bundleAluControl.ctrlAUIPC){
+        oprand1 := io.pc
+    }.elsewhen(io.bundleAluControl.ctrlLUI){
+        oprand1 := 0.U
+    }.otherwise{
+        oprand1 := io.dataRead1
+    }
+    //oprand1 := Mux(io.bundleAluControl.ctrlJAL, io.pc, io.dataRead1) 语句有误
     oprand2 := Mux(io.bundleAluControl.ctrlALUSrc, io.imm, io.dataRead2)
 
     // 根据bundleAluControl中的信号进行选择
