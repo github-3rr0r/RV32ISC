@@ -18,6 +18,8 @@ class Controller extends Module {
     // alu
     io.bundleAluControl.ctrlALUSrc := io.bundleControlIn.ctrlALUSrc
     io.bundleAluControl.ctrlJAL := io.bundleControlIn.ctrlJAL
+    io.bundleAluControl.ctrlLUI := io.bundleControlIn.ctrlLUI    //新增 corrected
+    io.bundleAluControl.ctrlAUIPC := io.bundleControlIn.ctrlAUIPC    //新增 corrected
     io.bundleAluControl.ctrlOP := io.bundleControlIn.ctrlOP
     io.bundleAluControl.ctrlSigned := io.bundleControlIn.ctrlSigned
     io.bundleAluControl.ctrlBranch := io.bundleControlIn.ctrlBranch
