@@ -20,7 +20,7 @@ jobs:
         with:
           mill-version: 0.9.7
       - name: Cache Scala
-        uses: coursier/cache-action@v5
+        uses: coursier/cache-action@v6
       - name: SBT Test
         run: sbt test
       - name: mill Test
