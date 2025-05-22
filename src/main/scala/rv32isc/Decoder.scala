@@ -43,6 +43,8 @@ class Decoder extends Module {
     val ctrlStore = WireDefault(false.B)
     val ctrlALUSrc = WireDefault(false.B)
     val ctrlJAL = WireDefault(false.B)
+    val ctrlAUIPC = WireDefault(false.B)//判断指令是否为AUIPC指令，如果是，操作数1的值应当为当前PC的值 新增 corrected by rainman
+    val ctrlLUI = WireDefault(false.B) //判断是否为LUI指令，如果是，操作数1的值应当为0 新增
     val ctrlOP = WireDefault(0.U(OP_TYPES_WIDTH.W))
     val ctrlSigned = WireDefault(true.B)
     val ctrlLSType = WireDefault(LS_W)
@@ -50,11 +52,28 @@ class Decoder extends Module {
     // 根据opcode对控制信号赋值
     switch (io.inst(6, 2)) {
         // U: LUI, AUIPC
-        is ("b01101".U, "b00101".U) {
+        /*is ("b01101".U, "b00101".U) {
             ctrlALUSrc := true.B
             ctrlOP := OP_ADD
             imm := imm_u
+        }*/
+        //新增 corrected
+        //U: LUI
+        is ("b01101".U){
+            ctrlALUSrc := true.B
+            ctrlOP := OP_ADD
+            ctrlLUI :=true.B
+            imm := imm_u
         }
+        //U: AUIPC
+        is ("b00101".U){
+            ctrlALUSrc := true.B
+            ctrlOP := OP_ADD
+            ctrlAUIPC := true.B
+            //ctrlJAL := true.B
+            imm := imm_u
+        }
+        
         // J: JAL
         is ("b11011".U) {
             ctrlALUSrc := true.B
@@ -238,6 +257,8 @@ class Decoder extends Module {
     io.bundleCtrl.ctrlALUSrc := ctrlALUSrc
     io.bundleCtrl.ctrlBranch := ctrlBranch
     io.bundleCtrl.ctrlJAL := ctrlJAL
+    io.bundleCtrl.ctrlLUI := ctrlLUI //新增 corrected
+    io.bundleCtrl.ctrlAUIPC := ctrlAUIPC //新增 corrected
     io.bundleCtrl.ctrlJump := ctrlJump
     io.bundleCtrl.ctrlLoad := ctrlLoad
     io.bundleCtrl.ctrlOP := ctrlOP

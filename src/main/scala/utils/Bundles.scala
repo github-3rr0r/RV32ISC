@@ -14,6 +14,8 @@ class BundleControl extends Bundle {
     val ctrlStore = Output(Bool())
     val ctrlALUSrc = Output(Bool())
     val ctrlJAL = Output(Bool())
+    val ctrlLUI = Output(Bool()) //新增 corrected
+    val ctrlAUIPC = Output(Bool()) //新增 corrected
     val ctrlOP = Output(UInt(OP_TYPES_WIDTH.W))
     val ctrlSigned = Output(Bool())
     val ctrlLSType = Output(UInt(LS_TYPE_WIDTH.W))
@@ -22,6 +24,8 @@ class BundleControl extends Bundle {
 class BundleAluControl extends Bundle {
     val ctrlALUSrc = Input(Bool())
     val ctrlJAL = Input(Bool())
+    val ctrlLUI = Input(Bool()) //新增 corrected
+    val ctrlAUIPC = Input(Bool()) //新增 corrected
     val ctrlOP = Input(UInt(OP_TYPES_WIDTH.W))
     val ctrlSigned = Input(Bool())
     val ctrlBranch = Input(Bool())
